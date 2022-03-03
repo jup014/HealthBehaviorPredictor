@@ -1,6 +1,8 @@
 from unittest import TestCase
-
+from hbp.models import Data
 from hbp.services import HealthBehaviorPredictor
+
+from datetime import datetime
 
 class ServiceTest(TestCase):
     def test_main(self):
@@ -17,3 +19,10 @@ class ServiceTest(TestCase):
         userlist = predictor.get_user_list()
         self.assertEqual(len(userlist), 1)
         self.assertEqual(userlist[0].username, 'test')
+    
+    def test_add_data(self):
+        predictor = HealthBehaviorPredictor()
+        user = predictor.add_user('test')
+        data = Data(user=user)
+        data.add_datapoint(datetime.now(), 1.0)
+        predictor.add_data(data)

@@ -6,6 +6,7 @@ class HealthBehaviorPredictor:
 
     def __init__(self):
         self.user_list = []
+        self.data_list = []
 
     @property
     def __version__(self):
@@ -18,3 +19,6 @@ class HealthBehaviorPredictor:
 
     def get_user_list(self):
         return self.user_list
+    
+    def add_data(self, data):
+        self.data_list.append(data)
