@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from unittest import TestCase
 from hbp.models import Data, User, DataPoint
 
@@ -22,3 +22,10 @@ class ModelTest(TestCase):
         user = User(username="testuser")
         data = Data(user=user)
         data.add_datapoint(datetime.now(), "steps per day", 1.0)
+
+    def test_data_add_datapoint_list(self):
+        user = User(username="testuser")
+        data = Data(user=user)
+        data.add_datapoint_list(datetime.now(), "steps per day", [1, 2, 3], timedelta(days=1))
+
+        
