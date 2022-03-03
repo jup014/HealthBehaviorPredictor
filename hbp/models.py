@@ -1,26 +1,30 @@
-import datetime
+from datetime import datetime
+from typing import List, Optional, TypeVar, Generic
+from pydantic import BaseModel
+from pydantic.generics import GenericModel
 
-class User:
-    def __init__(self, username):
-        self.username = username
+class User(BaseModel):
+    username: str
 
-class TimeSeries:
-    def __init__(self, start_time, data_list, time_unit=datetime.timedelta(days=1)):
-        self.start_time = start_time
-        self.data_list = data_list
-        self.time_unit = time_unit
+TypeX = TypeVar('TypeX')
 
-class AdditionalInfoType:
-    def __init__(self, typename, options=None):
-        self.typename = typename
-        self.options = options
+class DataPoint(GenericModel, Generic[TypeX]):
+    timestamp: datetime
+    value: TypeX
 
-class AdditionalInfo:
-    def __init__(self, typename, starttime, value):
-        self.typename = typename
-        self.starttime = starttime
-        self.value = value
+class Data(BaseModel):
+    user: User
+    data: List[DataPoint] = []
 
-class HealthBehaviorPredictionContext:
-    def add_additional_info(self, typename, starttime, value):
-        pass
+    def add_datapoint(self, timestamp: datetime, value):
+        if isinstance(value, int):
+            datapoint = DataPoint[int](timestamp=timestamp, value=value)
+        elif isinstance(value, float):
+            datapoint = DataPoint[float](timestamp=timestamp, value=value)
+        else:
+            raise TypeError("DataPoint value must be int or float")
+
+        self.data.append(datapoint)
+
+
+
