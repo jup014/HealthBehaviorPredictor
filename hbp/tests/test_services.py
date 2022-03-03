@@ -26,3 +26,23 @@ class ServiceTest(TestCase):
         data = Data(user=user)
         data.add_datapoint(datetime.now(), "daily step data", 1.0)
         predictor.add_data(data)
+
+    def test_train(self):
+        predictor = HealthBehaviorPredictor()
+        predictor.train()
+    
+    def test_predict(self):
+        predictor = HealthBehaviorPredictor()
+        predictor.predict()
+
+    def test_predict2(self):
+        predictor = HealthBehaviorPredictor()
+        user = predictor.add_user('test')
+        data = Data(user=user)
+        data.add_datapoint(datetime.now(), "daily step data", 1.0)
+        predictor.add_data(data)
+
+        predictor.train()
+
+        predictor.predict()
+        

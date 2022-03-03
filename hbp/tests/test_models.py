@@ -21,12 +21,12 @@ class ModelTest(TestCase):
         datapoint2 = DataPoint[int](timestamp=datetime.now(), type="steps per day", value=1)
         self.assertEqual(datapoint2.value, 1)
 
-        self.assertRaises(TypeError, DataPoint[str], timestamp=datetime.now(), type="steps per day", value="1")
-
     def test_data_add_datapoint(self):
         user = User(username="testuser")
         data = Data(user=user)
         data.add_datapoint(datetime.now(), "steps per day", 1.0)
+
+        self.assertRaises(TypeError, data.add_datapoint, timestamp=datetime.now(), type="steps per day", value="1")
 
     def test_data_add_datapoint_list(self):
         user = User(username="testuser")

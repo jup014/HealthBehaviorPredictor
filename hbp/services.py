@@ -22,3 +22,9 @@ class HealthBehaviorPredictor:
     
     def add_data(self, data):
         self.data_list.append(data)
+
+    def train(self):
+        pass
+
+    def predict(self):
+        pass
