@@ -10,17 +10,18 @@ TypeX = TypeVar('TypeX')
 
 class DataPoint(GenericModel, Generic[TypeX]):
     timestamp: datetime
+    type: str
     value: TypeX
 
 class Data(BaseModel):
     user: User
     data: List[DataPoint] = []
 
-    def add_datapoint(self, timestamp: datetime, value):
+    def add_datapoint(self, timestamp: datetime, type: str, value):
         if isinstance(value, int):
-            datapoint = DataPoint[int](timestamp=timestamp, value=value)
+            datapoint = DataPoint[int](timestamp=timestamp, type=type, value=value)
         elif isinstance(value, float):
-            datapoint = DataPoint[float](timestamp=timestamp, value=value)
+            datapoint = DataPoint[float](timestamp=timestamp, type=type, value=value)
         else:
             raise TypeError("DataPoint value must be int or float")
 

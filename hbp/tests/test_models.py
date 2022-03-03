@@ -15,10 +15,10 @@ class ModelTest(TestCase):
         data = Data(user=user)
 
     def test_datapoint(self):
-        datapoint = DataPoint[float](timestamp=datetime.now(), value=1.0)
+        datapoint = DataPoint[float](timestamp=datetime.now(), type="steps per day", value=1.0)
         self.assertEqual(datapoint.value, 1.0)
 
     def test_data_add_datapoint(self):
         user = User(username="testuser")
         data = Data(user=user)
-        data.add_datapoint(datetime.now(), 1.0)
+        data.add_datapoint(datetime.now(), "steps per day", 1.0)
